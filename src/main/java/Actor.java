@@ -1,6 +1,11 @@
 public class Actor {
 
-    public String name;
-    public Movie[] movies;
+    private String name;
+    private Movie[] movies;
+
+    public Actor (String new_name, Movie[] new_movies) {
+        name = new_name;
+        movies = new_movies;
+    }
 
 }
