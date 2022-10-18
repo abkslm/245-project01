@@ -1,11 +1,7 @@
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.exceptions.CsvException;
+package proj01;
 
 import java.io.*;
 import java.nio.CharBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class FileHandler {
@@ -28,10 +24,8 @@ public class FileHandler {
 
     public void read() throws IOException {
         byte[] bytes = this.in_stream.readAllBytes();
-        String str = new String(bytes);
-        for (int i = 0; i < str.length(); i++) {
-
-        }
+        String byte_str = new String(bytes);
+        String[] csv = Parser.parse_csv(byte_str);
 
     }
 }

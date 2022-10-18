@@ -1,3 +1,5 @@
+package proj01;
+
 public class Movie {
 
     private int id;

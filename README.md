@@ -1,2 +1,2 @@
 # 245-project01
-## Movie Wall :)
+## proj01.Movie Wall :)
