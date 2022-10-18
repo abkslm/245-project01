@@ -1,5 +1,6 @@
 public class Movie {
 
+    private int id;
     private String title;
     private String role;
     private String character;
@@ -13,6 +14,10 @@ public class Movie {
     public Movie (String new_title, String new_role) {
         this.title = new_title;
         this.role = new_role;
+
+    }
+
+    public void sort_movies() {
 
     }
 

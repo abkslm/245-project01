@@ -1,11 +1,19 @@
+import java.util.ArrayList;
+
 public class Actor {
 
     private String name;
-    private Movie[] movies;
+    private ArrayList<Movie> movies;
 
-    public Actor (String new_name, Movie[] new_movies) {
-        name = new_name;
-        movies = new_movies;
+    public Actor (String new_name) {
+        this.name = new_name;
+    }
+
+    public ArrayList<Movie> get_movies() {
+        return movies;
+    }
+    public boolean add_movie(Movie movie)  {
+        return false;
     }
 
 }
