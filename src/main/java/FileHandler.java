@@ -12,7 +12,7 @@ public class FileHandler {
     // Constant array indices, used in accessing CSVReader output
     static final int YEAR = 0;
     static final int MOVIE = 1;
-    static final int JSON = 2;
+    static final int CAST = 2;
 
     private InputStream in_stream;
     private CSVReader reader;
