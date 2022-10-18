@@ -3,6 +3,7 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 
 import java.io.*;
+import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -15,22 +16,24 @@ public class FileHandler {
     static final int CAST = 2;
 
     private InputStream in_stream;
-    private CSVReader reader;
+    private Reader reader;
+
+    private CharBuffer buf = CharBuffer.allocate(10000);
 
 
     public FileHandler(String file_path) throws UnsupportedEncodingException {
         this.in_stream = main.class.getClassLoader().getResourceAsStream(file_path);
-        this.reader = new CSVReaderBuilder(new InputStreamReader(in_stream, "UTF-8")).withSkipLines(1).build();
-    }
-
-    public ArrayList<String[]> read_file () throws CsvException, IOException {
-        ArrayList<String[]> credit_lines = new ArrayList<>();
-        String[] credit_line = this.reader.readNext();
-        while (credit_line != null) {
-            credit_lines.add(credit_line);
-            credit_line = this.reader.readNext();
+        this.reader = new InputStreamReader(this.in_stream, "UTF-8");
         }
-        return credit_lines;
-    }
 
+    public void read() throws IOException {
+        byte[] bytes = this.in_stream.readAllBytes();
+        String str = new String(bytes);
+        for (int i = 0; i < str.length(); i++) {
+
+        }
+
+    }
 }
+
+
