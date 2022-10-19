@@ -39,16 +39,13 @@ public class Parser {
     public void parse_cast (ArrayList<String> cast, String movie_title) {
         for (String member : cast) {
             if (member.contains("cast")) {
-                //System.out.println("Parsing member: " + member);
                 int id = Integer.parseInt(use_regex(member, ID));
                 String name = use_regex(member, NAME);
                 String character = use_regex(member, CHAR);
 
                 Actor actor = new Actor(name, id);
                 actor.add_movie(new Movie(movie_title, character));
-                //System.out.println("Initialized actor: " + actor.get_name());
                 main.actors.attach(actor);
-                //System.out.println("Attached actor: " + main.actors.get_actor(actor).get_name());
             }
         }
     }
@@ -79,7 +76,6 @@ public class Parser {
         return sb.toString();
     }
 
-    // Parses data within the {} blocks, gives each block its own string. Returns arraylist of all resp. strings.
     private ArrayList<String> parse_data (String in_str){
         int brackets_found = 0;
         final int bracket_max = 2;

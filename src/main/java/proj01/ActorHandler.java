@@ -42,6 +42,13 @@ public class ActorHandler {
         } return -1;
     }
 
+    private boolean add_actor (Actor a) {
+        if (!this.actors.contains(a)) {
+            this.actors.add(a);
+            this.size++;
+            return true;
+        } else return false;
+    }
     public void attach (Actor a) {
         Actor existing;
         if ((existing = get_actor(a)) != null) {
@@ -53,12 +60,13 @@ public class ActorHandler {
             //System.out.println("Made actor: " + get_last().get_name());
         }
     }
-
-    private boolean add_actor (Actor a) {
-        if (!this.actors.contains(a)) {
-            this.actors.add(a);
-            this.size++;
-            return true;
-        } else return false;
+    public void sort() { //TODO implement, wrapper for ArrayHandler
+        ArrayHandler.Sorter.sort(this.actors);
     }
+
+    public int search (String target) {
+        int actor_index = ArrayHandler.Searcher.actor(this.actors, target);
+        return actor_index;
+    }
+
 }

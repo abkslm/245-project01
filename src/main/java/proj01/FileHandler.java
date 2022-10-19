@@ -18,13 +18,17 @@ public class FileHandler {
         FileInputStream file = new FileInputStream(file_path);
         InputStreamReader in_stream = new InputStreamReader(file, "UTF-8");
         this.reader = new BufferedReader(in_stream);
-        this.read();
-        }
+    }
 
-    public ArrayList<String[]> read() throws IOException {
+    public ArrayList<String[]> read() {
+        System.out.println("Reading file...");
         Parser parser = new Parser();
-        parser.parse_csv(this.reader);
-
+        try {
+            parser.parse_csv(this.reader);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Done.");
         return null;
         // call read_csv, save to array list. <> is each movie, [] 0 is movie title, 1 is data for an individual actor.
 
