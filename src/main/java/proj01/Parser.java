@@ -32,7 +32,6 @@ public class Parser {
             String title = parse_title(line);
             ArrayList<String> data = parse_data(line);
             parse_cast(data, title);
-
         }
     }
 
@@ -47,7 +46,9 @@ public class Parser {
 
                 Actor actor = new Actor(name, id);
                 actor.add_movie(new Movie(movie_title, character));
+                //System.out.println("Initialized actor: " + actor.get_name());
                 main.actors.attach(actor);
+                //System.out.println("Attached actor: " + main.actors.get_actor(actor).get_name());
             }
         }
     }
@@ -93,6 +94,7 @@ public class Parser {
                 sb.append(curr_ch);
             } else if (brackets_found == 2) {
                 data.add(sb.toString());
+                sb = new StringBuilder();
                 brackets_found = 0;
             }
         }
@@ -112,24 +114,10 @@ public class Parser {
 
         if (pattern != null) {
             Matcher matcher = pattern.matcher(input);
-                            matcher.find();
-            String output = matcher.group(1);
-            return output;
-        } else return null;
-
-//        Matcher matcher = pattern.matcher(input);
-//        System.out.println(matcher.find());
-//        String output = matcher.group(1);
-//        System.out.println(output);
-//        return null;
+            if (matcher.find()) {
+                String output = matcher.group(1);
+                return output;
+            }
+        } return null;
     }
-
-
-
-
-
-
-
-
-
 }

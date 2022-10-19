@@ -13,8 +13,10 @@ public class main {
 
         FileHandler fileHandler = new FileHandler("src/main/tmdb_5000_credits.csv");
         for (int i = 0; i < actors.length(); i++) {
-            System.out.println(actors.get_actor_index(i));
+            System.out.println(actors.get_by_index(i).get_name());
         }
+        System.out.println("Initialized " + actors.length() + " actors.");
+
 
 
 

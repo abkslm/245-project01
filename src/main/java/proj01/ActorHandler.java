@@ -21,11 +21,17 @@ public class ActorHandler {
         return null;
     }
 
-    public Actor get_actor_index (int i) {
+    public Actor get_by_index (int i) {
         if (i < this.size) {
             return actors.get(i);
         }
         return null;
+    }
+
+    public Actor get_last () {
+        if (size >= 1) {
+            return this.actors.get(size - 1);
+        } else return this.actors.get(0);
     }
 
     public int contains (Actor a) {
@@ -39,15 +45,19 @@ public class ActorHandler {
     public void attach (Actor a) {
         Actor existing;
         if ((existing = get_actor(a)) != null) {
+            //System.out.println("Actor " + a.get_name() + " already exists!!");
             existing.add_movie(a.get_movies().get(0));
         } else {
+            //System.out.println("Actor " + a.get_name() + " does not yet exist!!");
             add_actor(a);
-        } this.size++;
+            //System.out.println("Made actor: " + get_last().get_name());
+        }
     }
 
     private boolean add_actor (Actor a) {
-        if (this.actors.contains(a)) {
-            this.actors.add(a);  // THIS IS WRONG< FIX IT!!!
+        if (!this.actors.contains(a)) {
+            this.actors.add(a);
+            this.size++;
             return true;
         } else return false;
     }
