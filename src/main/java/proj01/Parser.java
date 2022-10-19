@@ -18,39 +18,37 @@ public class Parser {
     static final int CHAR = 3;
     static final int ID = 4;
 
-    ArrayList<String> titles = new ArrayList<>();
-    ArrayList<ArrayList<String>> data = new ArrayList<>();
+    //ArrayList<String> titles = new ArrayList<>();
+    //ArrayList<ArrayList<String>> data = new ArrayList<>();
 
 
     public Parser() {}
 
     public void parse_csv (BufferedReader reader) throws IOException {
-        final int TITLE = 0;
-        final int DATA = 1;
         String line;
-
         int i = 0;
         reader.readLine();
+        while ((line = reader.readLine()) != null) {
+            String title = parse_title(line);
+            ArrayList<String> data = parse_data(line);
+            parse_cast(data, title);
 
-//        while ((line = reader.readLine()) != null) {
-//            this.titles.add(parse_title(line));
-//            this.data.add(parse_data(line));
-//            System.out.println(this.data.get(0).get(0).toString());
-//        }
+        }
     }
 
 
-    /*
-    REGEX: Pattern pattern = Pattern.compile(""character"": ""[a-zA-Z]+""
-     */
-    public void parse_cast (ArrayList<String> cast) {
+    public void parse_cast (ArrayList<String> cast, String movie_title) {
         for (String member : cast) {
+            System.out.println("Parsing member: " + member);
             int id = Integer.parseInt(use_regex(member, ID));
             String name = use_regex(member, NAME);
             String character = use_regex(member, CHAR);
+
+            Actor actor = new Actor(name, id);
+            actor.add_movie(new Movie(movie_title, character));
+            main.actors.add(actor);
+
         }
-
-
     }
 
 
@@ -79,7 +77,7 @@ public class Parser {
         return sb.toString();
     }
 
-    // Parses data within the {} blocks, gives each block its own string
+    // Parses data within the {} blocks, gives each block its own string. Returns arraylist of all resp. strings.
     private ArrayList<String> parse_data (String in_str){
         int brackets_found = 0;
         final int bracket_max = 2;
