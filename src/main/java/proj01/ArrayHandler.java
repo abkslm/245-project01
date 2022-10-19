@@ -37,7 +37,7 @@ public class ArrayHandler {
             if (left < right) {
                 int piv = randomPartition(unsorted, left, right);
                 quickSort(unsorted, left, piv - 1);
-                quickSort(unsorted, piv + 1, right);
+                quickSort(unsorted, piv, right);
             }
         }
 
