@@ -1,26 +1,32 @@
 package proj01;
 
 import java.io.*;
-import java.nio.CharBuffer;
-import java.util.ArrayList;
+import java.nio.charset.StandardCharsets;
 
+/**
+ * This class handles the provided file (as the name alludes to).
+ * After reading the file into a buffer, it calls the parser to manipulate/deal with the contents
+ */
 
 public class FileHandler {
 
-    // Constant array indices, used in accessing CSVReader output
-    static final int TITLE = 0;
-    static final int CAST = 1;
+    private final BufferedReader reader;
 
-    private BufferedReader reader;
-
-
+    /**
+     *
+     * @param file_path -> File path provided in Driver.main(args[0]).
+     * @throws IOException -> Must throw exception, handled in Driver.main().
+     */
     public FileHandler(String file_path) throws IOException {
         FileInputStream file = new FileInputStream(file_path);
-        InputStreamReader in_stream = new InputStreamReader(file, "UTF-8");
+        InputStreamReader in_stream = new InputStreamReader(file, StandardCharsets.UTF_8);
         this.reader = new BufferedReader(in_stream);
     }
 
-    public ArrayList<String[]> read() {
+    /**
+     * A void function, handles contents of the datafile, then hands off to the parser.
+     */
+    public void read() {
         System.out.println("Reading file...");
         Parser parser = new Parser();
         try {
@@ -29,9 +35,6 @@ public class FileHandler {
             throw new RuntimeException(e);
         }
         System.out.println("Done.");
-        return null;
-        // call read_csv, save to array list. <> is each movie, [] 0 is movie title, 1 is data for an individual actor.
-
     }
 }
 

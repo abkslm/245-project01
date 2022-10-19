@@ -2,6 +2,10 @@ package proj01;
 
 import java.util.ArrayList;
 
+/**
+ * This code is literally ripped from labs 3 and 5, but ey! gotta use our resources (where we can)!
+ */
+
 public class ArrayHandler {
 
     public static class Sorter {
@@ -10,7 +14,7 @@ public class ArrayHandler {
          *
          * @param unsorted unsorted array
          */
-        public static <String extends Comparable<String>> void sort(ArrayList<Actor> unsorted) {
+        public static void sort(ArrayList<Actor> unsorted) {
             quickSort(unsorted, 0, unsorted.size() - 1);
         }
 
@@ -21,7 +25,7 @@ public class ArrayHandler {
          * @param left     left boundary
          * @param right    right boundary
          */
-        private static <String extends Comparable<String>> void quickSort(ArrayList<Actor> unsorted, int left, int right) {
+        private static void quickSort(ArrayList<Actor> unsorted, int left, int right) {
             if (left < right) {
                 int piv = randomPartition(unsorted, left, right);
                 quickSort(unsorted, left, piv - 1);
@@ -38,7 +42,7 @@ public class ArrayHandler {
          * @param right    right pointer
          * @return perform sorting and return the index of pivot
          */
-        private static <String extends Comparable<String>> int randomPartition(ArrayList<Actor> unsorted, int left, int right) {
+        private static int randomPartition(ArrayList<Actor> unsorted, int left, int right) {
             int randomIndex = left + (int) (Math.random() * (right - left + 1));
             swap(unsorted, randomIndex, right);
             return partition(unsorted, left, right);
@@ -66,7 +70,7 @@ public class ArrayHandler {
          * @param right right boundary
          * @return pivot index
          */
-        private static <String extends Comparable<String>> int partition(ArrayList<Actor> arr, int left, int right) {
+        private static int partition(ArrayList<Actor> arr, int left, int right) {
             Actor pivot = arr.get(left + right >> 1); // -> the element in the middle, not the pivot index
 
             //When comparing generic data from the array, use the compareTo() function instead of equality operators
@@ -93,11 +97,9 @@ public class ArrayHandler {
         }
     }
 
-    public class Searcher {
+    public static class Searcher {
 
         public static int actor(ArrayList<Actor> actors, String target) {
-            //TODO: Implement
-            // create left and right indices
             target = target.toLowerCase();
             int left = 0;
             int right = actors.size() - 1;
@@ -107,7 +109,6 @@ public class ArrayHandler {
                 // do the binary dance, check one side, check the other, enter, rinse, repeat.
                 int midpoint = (right + left) / 2;
                 String curr_actor = actors.get(midpoint).get_name().toLowerCase();
-                //System.out.println(curr_actor + " " + target);
 
                 if (curr_actor.equals(target)) {
                     return midpoint;

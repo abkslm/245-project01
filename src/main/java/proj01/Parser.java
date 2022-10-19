@@ -2,31 +2,33 @@ package proj01;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 
-
+/**
+ * This class, as you may expect, parses, taking an input from the FileHandler, then doing its thing.
+ */
 
 public class Parser {
-    static final int TITLE = 0;
-    static final int DATA = 1;
     static final int NAME = 2;
     static final int CHAR = 3;
     static final int ID = 4;
 
-    //ArrayList<String> titles = new ArrayList<>();
-    //ArrayList<ArrayList<String>> data = new ArrayList<>();
+
 
 
     public Parser() {}
 
+    /**
+     * Parses CSV via helper functions.
+     * @param reader -> a BufferedReader provided by FileHandler
+     * @throws IOException -> In case the reader has an aneurysm
+     */
     public void parse_csv (BufferedReader reader) throws IOException {
         String line;
-        int i = 0;
         reader.readLine();
         while ((line = reader.readLine()) != null) {
             String title = parse_title(line);
@@ -35,22 +37,30 @@ public class Parser {
         }
     }
 
-
+    /**
+     * Parses the cast data, within the "data" field (garbage in json clothing)
+     * @param cast -> String containing entire cast column.
+     * @param movie_title -> Movie title, used to create actors and their movies.
+     */
     public void parse_cast (ArrayList<String> cast, String movie_title) {
         for (String member : cast) {
             if (member.contains("cast")) {
-                int id = Integer.parseInt(use_regex(member, ID));
+                int id = Integer.parseInt(Objects.requireNonNull(use_regex(member, ID)));
                 String name = use_regex(member, NAME);
                 String character = use_regex(member, CHAR);
 
                 Actor actor = new Actor(name, id);
                 actor.add_movie(new Movie(movie_title, character));
-                main.actors.attach(actor);
+                Driver.actors.attach(actor);
             }
         }
     }
 
-
+    /**
+     * Parses/gets the title from the current line within the file.
+     * @param in_str -> A string containing the entire line mentioned above.
+     * @return -> Returns the title of the movie.
+     */
     private String parse_title (String in_str) {
         int commas_found = 0;
         int quotes_found = 0;
@@ -76,6 +86,11 @@ public class Parser {
         return sb.toString();
     }
 
+    /**
+     *
+     * @param in_str -> A string containing the current line within the file.
+     * @return -> Returns an ArrayList of Strings, containing each cast member's cell per node.
+     */
     private ArrayList<String> parse_data (String in_str){
         int brackets_found = 0;
         final int bracket_max = 2;
@@ -97,8 +112,13 @@ public class Parser {
         return data;
     }
 
+    /**
+     * Allows needed actor data to be pulled via regex.
+     * @param input -> String to be parsed with regex
+     * @param key -> A constant of sorts, allows specification of which datum is needed.
+     * @return -> Returns the requested extracted String.
+     */
     public static String use_regex (String input, int key) {
-        String test_string = new String("{\"\"\"cast_id\"\": 242, \"\"character\"\": \"\"Jake Sully\"\", \"\"credit_id\"\": \"\"5602a8a7c3a3685532001c9a\"\", \"\"gender\"\": 2, \"\"id\"\": 65731, \"\"name\"\": \"\"Sam Worthington\"\", \"\"order\"\": 0}");
         Pattern pattern = null;
         if (key == NAME) {
             pattern = Pattern.compile("\"\"name\"\": \"\"(.*?)\"\"", Pattern.CASE_INSENSITIVE);
@@ -111,8 +131,7 @@ public class Parser {
         if (pattern != null) {
             Matcher matcher = pattern.matcher(input);
             if (matcher.find()) {
-                String output = matcher.group(1);
-                return output;
+                return matcher.group(1);
             }
         } return null;
     }
