@@ -39,15 +39,16 @@ public class Parser {
 
     public void parse_cast (ArrayList<String> cast, String movie_title) {
         for (String member : cast) {
-            System.out.println("Parsing member: " + member);
-            int id = Integer.parseInt(use_regex(member, ID));
-            String name = use_regex(member, NAME);
-            String character = use_regex(member, CHAR);
+            if (member.contains("cast")) {
+                //System.out.println("Parsing member: " + member);
+                int id = Integer.parseInt(use_regex(member, ID));
+                String name = use_regex(member, NAME);
+                String character = use_regex(member, CHAR);
 
-            Actor actor = new Actor(name, id);
-            actor.add_movie(new Movie(movie_title, character));
-            main.actors.add(actor);
-
+                Actor actor = new Actor(name, id);
+                actor.add_movie(new Movie(movie_title, character));
+                main.actors.attach(actor);
+            }
         }
     }
 
