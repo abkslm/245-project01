@@ -2,30 +2,31 @@ package proj01;
 
 import java.io.*;
 import java.nio.CharBuffer;
+import java.util.ArrayList;
 
 
 public class FileHandler {
 
     // Constant array indices, used in accessing CSVReader output
-    static final int YEAR = 0;
-    static final int MOVIE = 1;
-    static final int CAST = 2;
+    static final int TITLE = 0;
+    static final int CAST = 1;
 
-    private InputStream in_stream;
-    private Reader reader;
-
-    private CharBuffer buf = CharBuffer.allocate(10000);
+    private BufferedReader reader;
 
 
-    public FileHandler(String file_path) throws UnsupportedEncodingException {
-        this.in_stream = main.class.getClassLoader().getResourceAsStream(file_path);
-        this.reader = new InputStreamReader(this.in_stream, "UTF-8");
+    public FileHandler(String file_path) throws IOException {
+        FileInputStream file = new FileInputStream(file_path);
+        InputStreamReader in_stream = new InputStreamReader(file, "UTF-8");
+        this.reader = new BufferedReader(in_stream);
+        this.read();
         }
 
-    public void read() throws IOException {
-        byte[] bytes = this.in_stream.readAllBytes();
-        String byte_str = new String(bytes);
-        String[] csv = Parser.parse_csv(byte_str);
+    public ArrayList<String[]> read() throws IOException {
+        Parser parser = new Parser();
+        parser.parse_csv(this.reader);
+
+        return null;
+        // call read_csv, save to array list. <> is each movie, [] 0 is movie title, 1 is data for an individual actor.
 
     }
 }
